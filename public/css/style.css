@@ -1,0 +1,95 @@
+body{
+    font-family: "HelveticaNeue-Thin", "Helvetica Neue Thin", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+
+#navContainer{
+    padding-left: 25px;
+    padding-right:25px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#leftDivLand{
+    background-color: #88D7F4;
+    height:100vh;
+    padding-top: 20%; 
+    padding-left: 3%;
+}
+.btn{
+    width:inherit;
+    height:45px;
+    margin-top:15px;
+    border-radius: 75px;
+    font-size:18px;
+    font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+#btn-sign{
+    background-color: #88D7F4;
+    color:#FFFFFF;
+    border-color:#88D7F4;
+}
+
+
+#btn-sign:hover{
+    background-color:#FFFFFF;
+    color:#88D7F4;
+    border-width:2px;
+    
+}
+
+#btn-log{
+    color:#88D7F4;
+    border-color:#88D7F4;
+    border-width:2px;
+}
+
+#btn-log:hover{
+    background-color: #88D7F4;
+    color:#FFFFFF;
+    border-color:#88D7F4;
+}
+
+#btn-group{
+   width: 300px;
+   margin-top: 50%;
+   margin-left:25%;
+}
+#mainNav{
+    background-color: #88D7F4;
+
+} 
+#quote{
+    color: #FFFFFF;
+    font-size: 50px;
+    text-shadow: 1px 1px #8b8b8b;
+    vertical-align: middle;
+    
+}
+.navbar-brand{
+    color:#707070;
+    font-weight: 100;
+    font-size: 60px;
+
+}
+#title{
+    color: #8b8b8b;
+    margin-top: 27%;
+    margin-left: 20%;
+    font-size:70px;
+    text-shadow:1px 1px black;
+}
+#navList a{
+    color: white;
+    text-decoration-line: none;
+}
+
+#navList a:hover{
+    color: #7EAFC1;
+}
+
+.navItem{
+    font-size:30px;
+    margin-left:40px;
+}
+
