@@ -2,15 +2,20 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
+<<<<<<< HEAD
 const socketio = require('socket.io');
 const Twitter = require('twit');
+=======
+
+
+>>>>>>> 958bc2861570b67675d08e51b33ae966c70ab2ae
 const db = require('./db');
 
 const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
-const config = require('./config.js');
-const T = new Twitter(config);
+const Twitter = require('twitter');
+// const T = new Twitter(config);
 
 // initialize express app
 const app = express();
@@ -25,6 +30,22 @@ io.on('connection',function(socket){
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//Twitter API currently prints tweets for DTrump --> Check the terminal 
+const client = new Twitter({
+    consumer_key: 'iCAwDM1eX3NpprOjGbssUd0Eg',
+    consumer_secret: '59xPw0xcozGmViW9Uns0BD13qX4dI3UvTGyUsGesm37wHrVYOm',
+    bearer_token: 'AAAAAAAAAAAAAAAAAAAAAIYg9QAAAAAA10NZVma%2FJL0jQyuMllf%2FTaXOG%2BU%3DVG1AoTppEGqAMfgrXNE8QTkiAcc6Pdv4isWpIJWIobLov0kt4M'
+});
+
+const params = {screen_name: 'POTUS'};
+client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+
+    for(let i = 0; i < tweets.length; i++){
+      console.log(tweets[i].text);
+    }
+  }
+});
 
 // hook up passport
 app.use(passport.initialize());
@@ -56,41 +77,6 @@ app.use(session({
   saveUninitialized: 'true'
 }));
 
-// Set up your search parameters
-var params = {
-  q: '#nodejs',
-  count: 10,
-  result_type: 'recent',
-  lang: 'en'
-}
-/*
-// Initiate your search using the above paramaters
-T.get('search/tweets', params, function(err, data, response) {
-  // If there is no error, proceed
-  if(!err){
-    // Loop through the returned tweets
-    for(let i = 0; i < data.statuses.length; i++){
-      // Get the tweet Id from the returned data
-      let id = { id: data.statuses[i].id_str }
-      // Try to Favorite the selected Tweet
-      T.post('favorites/create', id, function(err, response){
-        // If the favorite fails, log the error message
-        if(err){
-          console.log(err[0].message);
-        }
-        // If the favorite is successful, log the url of the tweet
-        else{
-          let username = response.user.screen_name;
-          let tweetId = response.id_str;
-          console.log('Favorited: ', `https://twitter.com/${yigehaodaomin}/status/${tweetId}`)
-        }
-      });
-    }
-  } else {
-    console.log(err);
-  }
-})
-*/
 // set routes
 app.use('/', views);
 app.use('/api', api );
