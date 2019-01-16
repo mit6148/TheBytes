@@ -3,6 +3,13 @@ function main() {
     console.log(user);
     renderNavbar(user);
     renderStories(user);
+//use socket!
+    const socket = io();
+    socket.on('story', function(story){
+      const storiesDiv = document.getElementById('stories');
+      storiesDiv.prepend(storyDOMObject(story.user));
+    });
+
   });
 }
 

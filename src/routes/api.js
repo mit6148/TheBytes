@@ -21,7 +21,14 @@ router.get('/user', function(req, res) {
     last_post: 'Anon was here',
   });
 });
+//add socket code here!!
+/*router.post(
+  '/game',
+  function(req,res){
+    const choice = new Choic
 
+  });
+*/
 /*router.get('/stories', function(req, res) {
   Story.find({}, function(err, stories) {
     res.send(stories);

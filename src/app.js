@@ -2,7 +2,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
-
+const socketio = require('socket.io');
 const Twitter = require('twit');
 const db = require('./db');
 
@@ -14,8 +14,13 @@ const T = new Twitter(config);
 
 // initialize express app
 const app = express();
+//configure socket.io
+const io = socketio(server);
+app.set('socketio',io);
 
-
+io.on('connection',function(socket){
+  console.log('a user connected');
+});
 // set POST request body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
