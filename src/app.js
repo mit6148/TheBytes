@@ -2,13 +2,8 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
-<<<<<<< HEAD
+
 const socketio = require('socket.io');
-const Twitter = require('twit');
-=======
-
-
->>>>>>> 958bc2861570b67675d08e51b33ae966c70ab2ae
 const db = require('./db');
 
 const passport = require('./passport');
@@ -19,13 +14,6 @@ const Twitter = require('twitter');
 
 // initialize express app
 const app = express();
-//configure socket.io
-const io = socketio(server);
-app.set('socketio',io);
-
-io.on('connection',function(socket){
-  console.log('a user connected');
-});
 // set POST request body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -101,6 +89,16 @@ app.use(function(err, req, res, next) {
 // port config
 const port = 3000; // config variable
 const server = http.Server(app);
+
+//configure socket.io
+const io = socketio(server);
+app.set('socketio',io);
+
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
