@@ -1,6 +1,5 @@
 // dependencies
 const express = require('express');
-
 // models
 
 const router = express.Router();
@@ -21,59 +20,25 @@ router.get('/user', function(req, res) {
     last_post: 'Anon was here',
   });
 });
-//add socket code here!!
-/*router.post(
-  '/game',
-  function(req,res){
-    const choice = new Choic
 
-  });
-*/
-/*router.get('/stories', function(req, res) {
-  Story.find({}, function(err, stories) {
-    res.send(stories);
-  });
-});*/
-/*
-router.post(
-  '/story',
-  function(req, res) {
-    const newStory = new Story({
-      'creator_id': 'anonid',
-      'creator_name': 'Anonmymous',
-      'content': req.body.content,
-    });
+const Twitter = require('twitter');
 
-    newStory.save(function(err,story) {
-      // configure socketio
-      if (err) console.log(err);
-    });
-
-    res.send({});
-  }
-);
-
-router.get('/comment', function(req, res) {
-  Comment.find({ parent: req.query.parent }, function(err, comments) {
-    res.send(comments);
-  })
+//Twitter API currently prints tweets for DTrump --> Check the terminal 
+const client = new Twitter({
+    consumer_key: 'iCAwDM1eX3NpprOjGbssUd0Eg',
+    consumer_secret: '59xPw0xcozGmViW9Uns0BD13qX4dI3UvTGyUsGesm37wHrVYOm',
+    bearer_token: 'AAAAAAAAAAAAAAAAAAAAAIYg9QAAAAAA10NZVma%2FJL0jQyuMllf%2FTaXOG%2BU%3DVG1AoTppEGqAMfgrXNE8QTkiAcc6Pdv4isWpIJWIobLov0kt4M'
 });
 
-router.post(
-  '/comment',
-  function(req, res) {
-    const newComment = new Comment({
-      'creator_id': 'anonid',
-      'creator_name': 'Anonymous',
-      'parent': req.body.parent,
-      'content': req.body.content,
-    });
+const params = {screen_name: 'POTUS'};
+const tweetsList = new Array(0);
 
-    newComment.save(function(err, comment) {
-      if (err) console.log(err);
-    });
+router.get('/tweets', function(req, res) {
+  client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', count: 20 , include_rts: false}, function(error, tweets, response) {
+    if (!error) {
+        res.send(tweets);
+    }
+  });
+});
 
-    res.send({});
-  }
-);*/
 module.exports = router;
