@@ -2,18 +2,22 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
-
+var fs = require('fs');                 // File system 
 const socketio = require('socket.io');
 const db = require('./db');
+const mocha = require('mocha');
 
 const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
 const Twitter = require('twitter');
+
+
 // const T = new Twitter(config);
 
 // initialize express app
 const app = express();
+
 // set POST request body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -26,15 +30,39 @@ const client = new Twitter({
 });
 
 const params = {screen_name: 'POTUS'};
+const tweetsCollection = db.collection('tweets');
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
 
     for(let i = 0; i < tweets.length; i++){
       console.log(tweets[i].text);
-      
+      /*  tweetsCollection.insert({
+        query: {'id': 'data.id'},
+        update: { $set: tweets},
+        upsert: true,
+        new: true
+    })*/
     }
   }
 });
+const tweetsModel = require('./models/tweet.js')
+
+db.collection('realTweets.realTweetsCollection1').insertOne(
+  {
+    'item':"hello world"
+  }
+);
+
+ function savingTweets(){
+  let char = new tweetsModel({
+    username: 'mario'
+  });
+  char.save().then(function(){//saves to the database
+    assert(char.isNew === false);//means it's not new 
+    done();//waits for the save to finish
+  });
+ }
+
 
 // hook up passport
 app.use(passport.initialize());
@@ -87,6 +115,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+
 // port config
 const port = 3000; // config variable
 const server = http.Server(app);
@@ -103,3 +133,4 @@ io.on('connection', function(socket){
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
+
