@@ -1,5 +1,6 @@
 //initialize a socket 
 const socket = io();
+var params = jQuery.deparam(window.location.search);
 
 //When player connects to server
 socket.on('connect', function() {
