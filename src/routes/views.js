@@ -11,4 +11,8 @@ router.get('/', function(req, res) {
   res.sendFile('landingPage.html', { root: 'src/views' });
 });
 
+router.get('/game', function(req, res) {
+  res.sendFile('game.html', { root: 'src/views' });
+});
+
 module.exports = router;

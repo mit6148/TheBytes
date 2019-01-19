@@ -31,6 +31,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
     for(let i = 0; i < tweets.length; i++){
       console.log(tweets[i].text);
+      
     }
   }
 });
