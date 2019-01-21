@@ -93,3 +93,49 @@ body{
     margin-left:40px;
 }
 
+
+
+
+
+
+
+
+
+/* the style guide for the game */
+
+/* main tweet cards */
+.panel{
+    padding:20px;
+    font-family:sans-serif;
+    height:inherit;
+}
+#game{
+    margin-top:8%;
+    margin-left: 34%;
+    width: 500px;
+}
+p{
+    display: inline;
+}
+#user_name{
+    margin-left: 30px;
+}
+#name{
+    font-family: sans-serif;
+    font-weight:bold;
+}
+
+.data{
+    display:inline;
+}
+#img-contain{
+    height:inherit;
+}
+
+.col-sm-3{
+    padding-bottom:18px;
+}
+.col-sm-6{
+    width: 84%;
+    margin-left: -50px;
+}
