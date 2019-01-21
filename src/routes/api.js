@@ -30,11 +30,10 @@ const client = new Twitter({
     bearer_token: 'AAAAAAAAAAAAAAAAAAAAAIYg9QAAAAAA10NZVma%2FJL0jQyuMllf%2FTaXOG%2BU%3DVG1AoTppEGqAMfgrXNE8QTkiAcc6Pdv4isWpIJWIobLov0kt4M'
 });
 
-const params = {screen_name: 'POTUS'};
-const tweetsList = new Array(0);
+const params = [];
 
 router.get('/tweets', function(req, res) {
-  client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', count: 20 , include_rts: false}, function(error, tweets, response) {
+  client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', include_rts: false}, function(error, tweets, response) {
     if (!error) {
         res.send(tweets);
     }
