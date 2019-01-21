@@ -3,7 +3,7 @@ function main() {
     get('/api/tweets', {}, function(tweets){
         const MAX = 3;
         for(let i = 0; i < MAX; i++){
-            const tweetCardDOM = document.createElement('div');
+            const tweetCardDOM = document.createElement('button');
             tweetCardDOM.className = 'panel panel-default row';
 
             const imgContainDOM = document.createElement('div');
@@ -18,7 +18,7 @@ function main() {
             imgContainDOM.appendChild(profileImageDOM);
 
             const tweetDataDOM = document.createElement('div');
-            tweetDataDOM.className = "col-sm-6"
+            tweetDataDOM.className = "col-sm-6";
             tweetDataDOM.id = 'tweet-data';
             tweetCardDOM.appendChild(tweetDataDOM);
             
