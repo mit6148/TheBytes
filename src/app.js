@@ -2,8 +2,8 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
-var fs = require('fs');                 // File system 
-const socketio = require('socket.io');
+var fs = require('fs');                 // File system
+const socketio = require('socket.io');//set up socket for the server
 const db = require('./db');
 const mocha = require('mocha');
 
@@ -11,6 +11,8 @@ const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
 const Twitter = require('twitter');
+
+const connections = [];//open a connection
 
 
 // const T = new Twitter(config);
@@ -22,7 +24,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//Twitter API currently prints tweets for DTrump --> Check the terminal 
+//Twitter API currently prints tweets for DTrump --> Check the terminal
 const client = new Twitter({
     consumer_key: 'iCAwDM1eX3NpprOjGbssUd0Eg',
     consumer_secret: '59xPw0xcozGmViW9Uns0BD13qX4dI3UvTGyUsGesm37wHrVYOm',
@@ -45,7 +47,6 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
     }
   }
 });
-const tweetsModel = require('./models/tweet.js')
 
 db.collection('realTweets.realTweetsCollection1').insertOne(
   {
@@ -58,7 +59,7 @@ db.collection('realTweets.realTweetsCollection1').insertOne(
     username: 'mario'
   });
   char.save().then(function(){//saves to the database
-    assert(char.isNew === false);//means it's not new 
+    assert(char.isNew === false);//means it's not new
     done();//waits for the save to finish
   });
  }
@@ -124,12 +125,52 @@ const server = http.Server(app);
 const io = socketio(server);
 app.set('socketio',io);
 
+//number of clients connected to the socket server 
+let numOfClients = 0;
 
-io.on('connection', function(socket){
+//testing room socket
+
+io.sockets.on('connection', function(socket){
+
+  socket.on('create', function(room) {
+    socket.join(room);
+    console.log(room);
+  });
+
+// now, it's easy to send a message to just the clients in a given room
+room = "abc123";
+io.sockets.in(room).emit('message', 'what is going on, party people?');
+
+  numOfClients++;
+  //Increase roomno 2 clients are present in a room.
+  //if(io.nsps['/index'].adapter.rooms["room-"+roomno] && io.nsps['/index'].adapter.rooms["room-"+roomno].length > 1) roomno++;
+  //socket.join("room-"+roomno);
+
+  
+
+  //Send this event to everyone in the room.
+  //io.sockets.in("room-"+roomno).emit('connectToRoom', "You are in room no. "+roomno);
+  //to broadcast an event 
+
+  /*io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'}) 
   console.log('a user connected');
+  socket.on('clientEvent',function(data){
+    console.log(data);
+  })
+  //send a message after a timeout of 4seconds
+  setTimeout(function(){
+    socket.emit('testerEvent', { description: 'A custom event named testerEvent!'});
+   },4000);*/
+
+
+  //execute the following when a user disconnects
+  socket.on('disconnect', function(){
+    numOfClients--;
+    io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
+    console.log('A user disconnected')
+  });
 });
 
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
 });
-

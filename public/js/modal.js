@@ -24,10 +24,7 @@ function stepOne(){
     multiplePlayerButtonDOM.addEventListener("click", stepTwo, false);
     multiplePlayerButtonDOM.innerText = "Multiple Player";
     selectModeDivDOM.appendChild(multiplePlayerButtonDOM);
-
-    modalBodyDOM.append(selectModeDivDOM);
-
-
+    modalBodyDOM.appendChild(selectModeDivDOM);
 
 
 }
@@ -40,6 +37,11 @@ function stepTwo(){
         enterPin();
     }
 } 
+
+function createRoom(){
+    var socket = io();  
+        socket.emit('create', 'room1');
+}
 
 
 
@@ -68,8 +70,12 @@ function enterPin(){
     formTagDOM.appendChild(inputTagDOM);
 
     const connectButtonDOM = document.createElement('button');
-    connectButtonDOM.innerText = 'connect'
+    connectButtonDOM.innerText = 'Connect'
     formTagDOM.appendChild(connectButtonDOM);
+
+    const createRoomDOM = document.createElement('button');
+    createRoomDOM.innerText = 'Create A New Game Room'
+    formTagDOM.appendChild(createRoomDOM);
 
     modalBodyDOM.appendChild(formTagDOM);
 }
@@ -79,7 +85,6 @@ function selectCategory(){
 
     const selectCategoryDivDOM = document.createElement('div');
     selectCategoryDivDOM.id = 'select-category';
-
 
     const politcsButtonButtonDOM = document.createElement('button'); 
     politcsButtonButtonDOM.id = 'politics-category';

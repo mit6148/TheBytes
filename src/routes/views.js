@@ -15,4 +15,8 @@ router.get('/game', function(req, res) {
   res.sendFile('game.html', { root: 'src/views' });
 });
 
+router.get('/test', function(req, res, next) {
+  res.sendFile('testChat.html', { root: 'src/views' });
+});
+
 module.exports = router;

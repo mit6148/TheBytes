@@ -2,7 +2,7 @@ function main() {
     const game = document.getElementById('game');
     get('/api/tweets', {}, function(tweets){
         const MAX = 3;
-        for(let i = 0; i < MAX; i++){
+        for (let i = 0; i < MAX; i++){
             const tweetCardDOM = document.createElement('button');
             tweetCardDOM.className = 'panel panel-default row';
 
@@ -40,6 +40,14 @@ function main() {
             
             game.prepend(tweetCardDOM);
         }
+
+            const socket = io();
+            socket.on('story', function(story){
+            const storiesDiv = document.getElementById('stories');
+            storiesDiv.prepend(storyDOMObject(story.user));
+          });
+    
+
     });
 }
 
