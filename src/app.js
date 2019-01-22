@@ -10,12 +10,7 @@ const mocha = require('mocha');
 const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
-const Twitter = require('twitter');
-const playerNum = 3;
-const connections = [];//open a connection
 
-
-// const T = new Twitter(config);
 
 // initialize express app
 const app = express();
@@ -24,42 +19,25 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
-db.collection('realTweets.realTweetsCollection1').insertOne(
-  {
-    'item':"hello world"
-  }
-);
-
+ // set up sessions
 app.use(session({
   secret: 'session-secret',
   resave: 'false',
   saveUninitialized: 'true'
 }));
 
- function savingTweets(){
-  let char = new tweetsModel({
-    username: 'mario'
-  });
-  char.save().then(function(){//saves to the database
-    assert(char.isNew === false);//means it's not new
-    done();//waits for the save to finish
-  });
- }
-
-
 // hook up passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 // authentication routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
 app.get(
   '/auth/google/callback',
   passport.authenticate(
     'google',
-    { failureRedirect: '/' }
+    { failureRedirect: '/login' }
   ),
   function(req, res) {
     res.redirect('/index');
@@ -71,12 +49,7 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
-// set up sessions
-app.use(session({
-  secret: 'session-secret',
-  resave: 'false',
-  saveUninitialized: 'true'
-}));
+
 
 // set routes
 app.use('/', views);
@@ -146,53 +119,6 @@ io.on('connection', function(socket) {
 
 
 
-//testing room socket
-
-// io.sockets.on('connection', function(socket){
-
-//   socket.on('room', function(room) {
-//     socket.join(room);
-//     io.sockets.in(room).emit('message', 'what is going on, party people?');
-//   });
-
-//     // socket.on('create', function(room) {
-//     // const gameId = (Math.random()+1).toString(36).slice(2,18);
-//     // console.log('Game room:' + gameId);
-//     // socket.join(room);
-//     // socket.rooms = [room];
-//     // console.log(socket.rooms.id);
-
-
-//     // io.emit('gameCreated', {
-//     //   id: gameId
-//     // });
-//   });
-
-// now, it's easy to send a message to just the clients in a given room
-
-  //Increase roomno 2 clients are present in a room.
-  //if(io.nsps['/index'].adapter.rooms["room-"+roomno] && io.nsps['/index'].adapter.rooms["room-"+roomno].length > 1) roomno++;
-  //socket.join("room-"+roomno);
-
-  
-
-  //Send this event to everyone in the room.
-  //io.sockets.in("room-"+roomno).emit('connectToRoom', "You are in room no. "+roomno);
-  //to broadcast an event 
-
-  /*io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'}) 
-  console.log('a user connected');
-  socket.on('clientEvent',function(data){
-    console.log(data);
-  })
-  //send a message after a timeout of 4seconds
-  setTimeout(function(){
-    socket.emit('testerEvent', { description: 'A custom event named testerEvent!'});
-   },4000);*/
-
-
-  //execute the following when a user disconnects
-  
 
 
 server.listen(port, function() {
