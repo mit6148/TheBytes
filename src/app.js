@@ -11,7 +11,7 @@ const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
 const Twitter = require('twitter');
-
+const playerNum = 3;
 const connections = [];//open a connection
 
 
@@ -53,16 +53,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // authentication routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get(
   '/auth/google/callback',
   passport.authenticate(
     'google',
-    { failureRedirect: '/l' }
+    { failureRedirect: '/' }
   ),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/index');
   }
 );
 
@@ -112,6 +112,7 @@ const destination =  '/game'
 
 //number of clients connected to the socket server 
 let numOfClients = 0;
+let numOfPlayersAnswered = 0;
 
 
 
@@ -123,13 +124,26 @@ io.on('connection', function(socket) {
     io.sockets.emit('redirect', destination);
     console.log('redirected');
   }
+  socket.on('playerAnswer', function(data){
+    console.log('playersAnswered');
+    numOfPlayersAnswered++;
+    if(numOfPlayersAnswered == playerNum ){
+      console.log('Everyone Answered');
+    }else{
+    socket.send('Waiting for other players to answer!')
+    }
+});
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
      console.log('A user disconnected');
      numOfClients--;
      io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
   });
+
+
+
 });
+
 
 
 //testing room socket

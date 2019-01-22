@@ -1,9 +1,9 @@
 let playerAnswered = false;
+const socket = io();
 
 
 function main() {
 
-    const socket = io();
 
     // socket.on('gameCreated',function(data){
     //     console.log('Game created!'+data.id);
@@ -16,7 +16,7 @@ function main() {
         for (let i = 0; i < MAX; i++){
             const tweetCardDOM = document.createElement('button');
             tweetCardDOM.className = 'panel panel-default row';
-
+            tweetCardDOM.id = i;
             const imgContainDOM = document.createElement('div');
             imgContainDOM.className = 'col-sm-3';
             imgContainDOM.id = 'img-contain ';
@@ -48,7 +48,7 @@ function main() {
             contentDOM.innerText = tweets[i].text;
             tweetDataDOM.appendChild(contentDOM);
 
-            tweetCardDOM.addEventListener('click',answerSubmitted(i),false);
+            tweetCardDOM.addEventListener('click',answerSubmitted,false);
 
             game.prepend(tweetCardDOM);
         }
@@ -63,10 +63,11 @@ function main() {
     });
 }
 
-function answerSubmitted(num){
-    if(playerAnswered == false){
+function answerSubmitted(){
+        console.log('clicked')
         playerAnswered = true;
-        //socket.emit('playerAnswer', num);//Sends player answer to server
+        socket.emit('playerAnswer', event.target.id);//Sends player answer to server
+        socket.on('message', function(data){document.write(data)});
         // //Hiding buttons from user
         // document.getElementById('answer1').style.visibility = "hidden";
         // document.getElementById('answer2').style.visibility = "hidden";
@@ -75,7 +76,6 @@ function answerSubmitted(num){
         // document.getElementById('message').style.display = "block";
         // document.getElementById('message').innerHTML = "Answer Submitted! Waiting on other players...";
 
-    }
 }
 
 main();

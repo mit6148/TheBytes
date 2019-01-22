@@ -4,11 +4,11 @@ const express = require('express');
 const router = express.Router();
 
 // public endpoints
-router.get('/', function(req, res) {
+router.get('/index', function(req, res) {
   res.sendFile('index.html', { root: 'src/views' });
 });
 
-router.get('/l', function(req, res) {
+router.get('/', function(req, res) {
   res.sendFile('landingPage.html', { root: 'src/views' });
 });
 
