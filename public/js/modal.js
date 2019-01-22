@@ -1,3 +1,5 @@
+const socket = io();
+
 function stepOne(){
     const modalBodyDOM = document.getElementById('modal-body');
     
@@ -34,18 +36,37 @@ function stepTwo(){
         selectCategory();
     }
     else{
-        enterPin();
+        multiplePlayerMode();
+        console.log('steptwo entered');
     }
 } 
 
-function createRoom(){
-    var socket = io();  
-        socket.emit('create', 'room1');
+// function connectRoom(){
+//     if (event.target.id == ''){
+//     }else{
+//     const socket = io.connect();
+//     socket.on('connect',function(){
+//         socket.emit('room',{pin: event.target.id });
+//         window.location.href = '/game';
+
+//     });
+//     socket.on('message', function(data) {
+//         console.log('Incoming message:', data);
+//      })
+// }
+// }
+function connectRoom(){
+    window.location.replace('/wait');
 }
 
+// function createRoom(){
+//     const socket = io(); 
+//     socket.emit('create');
+//     window.location.href = '/game';
+// }
 
 
-function enterPin(){
+function multiplePlayerMode(){
     const modalBodyDOM = document.getElementById('modal-body');
 
 
@@ -62,6 +83,7 @@ function enterPin(){
     labelTagDOM.innerText = 'Enter Group Pin:';
     formTagDOM.appendChild(labelTagDOM);
 
+
     const inputTagDOM = document.createElement('input');
     inputTagDOM.type = 'text';
     inputTagDOM.className = 'form-control';
@@ -69,13 +91,16 @@ function enterPin(){
     inputTagDOM.placeholder = 'Code Here';
     formTagDOM.appendChild(inputTagDOM);
 
-    const connectButtonDOM = document.createElement('button');
+    const connectButtonDOM = document.createElement('a');
     connectButtonDOM.innerText = 'Connect'
+    connectButtonDOM.addEventListener('click',connectRoom,false);
     formTagDOM.appendChild(connectButtonDOM);
 
-    const createRoomDOM = document.createElement('button');
-    createRoomDOM.innerText = 'Create A New Game Room'
-    formTagDOM.appendChild(createRoomDOM);
+    // const createRoomDOM = document.createElement('a');
+    // createRoomDOM.className = 'create-room';
+    // createRoomDOM.addEventListener('click',createRoom);
+    // createRoomDOM.innerText = 'Create A New Game Room'
+    // formTagDOM.appendChild(createRoomDOM);
 
     modalBodyDOM.appendChild(formTagDOM);
 }

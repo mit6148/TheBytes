@@ -24,35 +24,18 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//Twitter API currently prints tweets for DTrump --> Check the terminal
-const client = new Twitter({
-    consumer_key: 'iCAwDM1eX3NpprOjGbssUd0Eg',
-    consumer_secret: '59xPw0xcozGmViW9Uns0BD13qX4dI3UvTGyUsGesm37wHrVYOm',
-    bearer_token: 'AAAAAAAAAAAAAAAAAAAAAIYg9QAAAAAA10NZVma%2FJL0jQyuMllf%2FTaXOG%2BU%3DVG1AoTppEGqAMfgrXNE8QTkiAcc6Pdv4isWpIJWIobLov0kt4M'
-});
-
-const params = {screen_name: 'POTUS'};
-const tweetsCollection = db.collection('tweets');
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
-  if (!error) {
-
-    for(let i = 0; i < tweets.length; i++){
-      console.log(tweets[i].text);
-      /*  tweetsCollection.insert({
-        query: {'id': 'data.id'},
-        update: { $set: tweets},
-        upsert: true,
-        new: true
-    })*/
-    }
-  }
-});
 
 db.collection('realTweets.realTweetsCollection1').insertOne(
   {
     'item':"hello world"
   }
 );
+
+app.use(session({
+  secret: 'session-secret',
+  resave: 'false',
+  saveUninitialized: 'true'
+}));
 
  function savingTweets(){
   let char = new tweetsModel({
@@ -70,13 +53,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // authentication routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
 app.get(
   '/auth/google/callback',
   passport.authenticate(
     'google',
-    { failureRedirect: '/login' }
+    { failureRedirect: '/l' }
   ),
   function(req, res) {
     res.redirect('/');
@@ -125,23 +108,54 @@ const server = http.Server(app);
 const io = socketio(server);
 app.set('socketio',io);
 
+const destination =  '/game'
+
 //number of clients connected to the socket server 
 let numOfClients = 0;
 
+
+
+io.on('connection', function(socket) {
+  numOfClients++;
+  console.log('A user connected');
+  io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
+  if(numOfClients == 3){
+    io.sockets.emit('redirect', destination);
+    console.log('redirected');
+  }
+  //Whenever someone disconnects this piece of code executed
+  socket.on('disconnect', function () {
+     console.log('A user disconnected');
+     numOfClients--;
+     io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
+  });
+});
+
+
 //testing room socket
 
-io.sockets.on('connection', function(socket){
+// io.sockets.on('connection', function(socket){
 
-  socket.on('create', function(room) {
-    socket.join(room);
-    console.log(room);
-  });
+//   socket.on('room', function(room) {
+//     socket.join(room);
+//     io.sockets.in(room).emit('message', 'what is going on, party people?');
+//   });
+
+//     // socket.on('create', function(room) {
+//     // const gameId = (Math.random()+1).toString(36).slice(2,18);
+//     // console.log('Game room:' + gameId);
+//     // socket.join(room);
+//     // socket.rooms = [room];
+//     // console.log(socket.rooms.id);
+
+
+//     // io.emit('gameCreated', {
+//     //   id: gameId
+//     // });
+//   });
 
 // now, it's easy to send a message to just the clients in a given room
-room = "abc123";
-io.sockets.in(room).emit('message', 'what is going on, party people?');
 
-  numOfClients++;
   //Increase roomno 2 clients are present in a room.
   //if(io.nsps['/index'].adapter.rooms["room-"+roomno] && io.nsps['/index'].adapter.rooms["room-"+roomno].length > 1) roomno++;
   //socket.join("room-"+roomno);
@@ -164,12 +178,8 @@ io.sockets.in(room).emit('message', 'what is going on, party people?');
 
 
   //execute the following when a user disconnects
-  socket.on('disconnect', function(){
-    numOfClients--;
-    io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
-    console.log('A user disconnected')
-  });
-});
+  
+
 
 server.listen(port, function() {
   console.log('Server running on port: ' + port);

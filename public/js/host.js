@@ -1,16 +1,16 @@
 
-class Game{
+// class Game{
 
-  constructor(){
-    this.pin = this.generatePin();
-  }
+//   constructor(){
+//     this.pin = this.generatePin();
+//   }
 
-  generatePin(){
-    gameId = (Math.random()+1).toString(36).slice(2, 18);
-    console.log(gameId);
-    return gameId;
-  }
+//   generatePin(){
+//     gameId = (Math.random()+1).toString(36).slice(2, 18);
+//     console.log(gameId);
+//     return gameId;
+//   }
 
-}
+// }
 
-const gameTest = new Game();
+// const gameTest = new Game();

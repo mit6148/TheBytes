@@ -6,6 +6,7 @@ var score = 0;
 
 var params = jQuery.deparam(window.location.search); //Gets the id from url
 
+
 socket.on('connect', function() {
     //Tell server that it is host connection from game view
     socket.emit('player-join-game', params);
@@ -28,22 +29,22 @@ function endGame(){
     window.location.href = "/";
 }
 
-function answerSubmitted(num){
-    if(playerAnswered == false){
-        playerAnswered = true;
+// function answerSubmitted(num){
+//     if(playerAnswered == false){
+//         playerAnswered = true;
 
-        socket.emit('playerAnswer', num);//Sends player answer to server
+//         socket.emit('playerAnswer', num);//Sends player answer to server
 
-        //Hiding buttons from user
-        document.getElementById('answer1').style.visibility = "hidden";
-        document.getElementById('answer2').style.visibility = "hidden";
-        document.getElementById('answer3').style.visibility = "hidden";
-        document.getElementById('answer4').style.visibility = "hidden";
-        document.getElementById('message').style.display = "block";
-        document.getElementById('message').innerHTML = "Answer Submitted! Waiting on other players...";
+//         //Hiding buttons from user
+//         document.getElementById('answer1').style.visibility = "hidden";
+//         document.getElementById('answer2').style.visibility = "hidden";
+//         document.getElementById('answer3').style.visibility = "hidden";
+//         document.getElementById('answer4').style.visibility = "hidden";
+//         document.getElementById('message').style.display = "block";
+//         document.getElementById('message').innerHTML = "Answer Submitted! Waiting on other players...";
 
-    }
-}
+//     }
+// }
 
 //Get results on last question
 socket.on('answerResult', function(data){

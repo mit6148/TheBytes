@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Hello world</title>
+   </head>
+   <script src = "/socket.io/socket.io.js"></script>
+   <script>
+      const socket = io();
+      socket.on('broadcast',function(data) {
+         document.body.innerHTML = '';
+         document.write(data.description);
+      });
+      socket.on('redirect', function(destination) {
+    window.location.href = destination;
+});
+
+   </script>
+   <body>Hello world</body>
+</html>

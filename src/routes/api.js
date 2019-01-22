@@ -1,23 +1,25 @@
 // dependencies
 const express = require('express');
+const connect = require('connect-ensure-login');
+
 // models
 
 const router = express.Router();
 
+const User = require('../models/user');
 // api endpoints
 router.get('/whoami', function(req, res) {
-  res.send({
-    _id: 'anonid',
-    name: 'Anonymous',
-    last_post: 'Anon was here',
-  });
+  if(req.isAuthenticated()){
+    res.send(req.user);
+  }
+  else{
+    res.send({});
+  }
 });
 
 router.get('/user', function(req, res) {
-  res.send({
-    _id: 'anonid',
-    name: 'Anonymous',
-    last_post: 'Anon was here',
+  User.findOne({_id: req.query._id},function(err,user){
+    res.send(user);
   });
 });
 
