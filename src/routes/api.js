@@ -41,12 +41,17 @@ router.get('/tweets', function(req, res) {
   client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', include_rts: false}, function(error, tweets, response) {
     if (!error) {
         res.send(tweets);
-        let tweetsToBeSaved = {
-          twid: tweets['id'],
-          body: tweets['text'],
-          date: tweets['created_at'],
-          screenname: tweets['screen_name']
-        };
+
+
+        for(let i = 0; i < tweets.length; i++){
+          let tweetsToBeSaved = {
+            twid: tweets[i].id,
+            body: tweets[i].text,
+            date: tweets[i].created_at,
+            screenname: tweets[i].user.screen_name
+          };
+        }
+        
         var tweetEntry = new tweetModel(tweetsToBeSaved);
 
         tweetEntry.save(function(err) {
