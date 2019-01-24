@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-
+const mongoURL = process.env.ATLAS_SRV;
 // set up mongoDB connection
 // Example URI ---> mongodb+srv://weblab:6jYctMizX5Y5ie6W@catbook-fsjig.mongodb.net/catbookdb?retryWrites=true
-const mongoURL = 'mongodb://yangyuegly:Hhh201472@cluster0-shard-00-00-j4rwc.mongodb.net:27017,cluster0-shard-00-01-j4rwc.mongodb.net:27017,cluster0-shard-00-02-j4rwc.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true';
 
 const options = {
   useNewUrlParser: true

@@ -73,7 +73,7 @@ app.use(function(err, req, res, next) {
 
 
 // port config
-const port = 3000; // config variable
+const port = (process.env.PORT || 3000); // config variable
 const server = http.Server(app);
 
 //configure socket.io
@@ -121,6 +121,4 @@ io.on('connection', function(socket) {
 
 
 
-server.listen(port, function() {
-  console.log('Server running on port: ' + port);
-});
+server.listen(process.env.PORT || 3000);
