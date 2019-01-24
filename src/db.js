@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+console.log(process.env.ATLAS_SRV);
 const mongoURL = process.env.ATLAS_SRV;
 // set up mongoDB connection
 // Example URI ---> mongodb+srv://weblab:6jYctMizX5Y5ie6W@catbook-fsjig.mongodb.net/catbookdb?retryWrites=true

@@ -1,3 +1,5 @@
+const dotenv = require('dotenv').config();
+
 const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -9,7 +11,6 @@ const db = require('./db');
 const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
-require('dotenv').config();
 const user = require('./models/user')
 // initialize express app
 const app = express();
