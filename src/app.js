@@ -5,13 +5,12 @@ const session = require('express-session');
 var fs = require('fs');                 // File system
 const socketio = require('socket.io');//set up socket for the server
 const db = require('./db');
-const mocha = require('mocha');
 
 const passport = require('./passport');
 const views = require('./routes/views');
 const api = require('./routes/api');
-
-
+require('dotenv').config();
+const user = require('./models/user')
 // initialize express app
 const app = express();
 
@@ -82,6 +81,7 @@ const io = socketio(server);
 app.set('socketio',io);
 
 const destination =  '/game'
+
 
 //number of clients connected to the socket server 
 let numOfClients = 0;

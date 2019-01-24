@@ -2,6 +2,8 @@
 const express = require('express');
 const connect = require('connect-ensure-login');
 
+const db = require('../db');
+const tweetModel = require('../models/tweet')
 // models
 
 const router = express.Router();
@@ -33,13 +35,40 @@ const client = new Twitter({
 });
 
 const params = [];
+let tweetsToBeSaved = new Array(0);
 
 router.get('/tweets', function(req, res) {
   client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', include_rts: false}, function(error, tweets, response) {
     if (!error) {
         res.send(tweets);
+        let tweetsToBeSaved = {
+          twid: tweets['id'],
+          body: tweets['text'],
+          date: tweets['created_at'],
+          screenname: tweets['screen_name']
+        };
+        var tweetEntry = new tweetModel(tweetsToBeSaved);
+
+        tweetEntry.save(function(err) {
+          if (!err) {
+            // If everything is cool, socket.io emits the tweet.
+            console.log('tweet saved');
+          }
+        });
+        // tweetsToBeSaved = new tweetModel({
+        //   twitterUsername : tweets,
+        //   tweetContent    : tweets
+        // });
+        // tweetsToBeSaved.save(function (err) {
+        //    if (err) return handleError(err);
+        //   //   // saved!
+        //   console.log('tweet saved');
+        // });
     }
   });
 });
+
+
+
 
 module.exports = router;

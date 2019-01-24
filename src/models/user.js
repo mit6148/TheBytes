@@ -7,5 +7,6 @@ const UserModelSchema = new mongoose.Schema ({
   googleid     	: String,
 });
 
+
 // compile model from schema
 module.exports = mongoose.model('UserModel', UserModelSchema);
