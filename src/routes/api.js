@@ -45,10 +45,10 @@ router.get('/tweets', function(req, res) {
 
         for(let i = 0; i < tweets.length; i++){
           let tweetsToBeSaved = {
-            twid: tweets[i].id,
-            body: tweets[i].text,
-            date: tweets[i].created_at,
-            screenname: tweets[i].user.screen_name
+            twid: res.body.id,
+            body: res.body.text,
+            date: res.body.created_at,
+            screenname: res.body.user.screen_name
           };
         }
         
