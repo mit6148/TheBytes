@@ -8,6 +8,9 @@ function main() {
     // socket.on('gameCreated',function(data){
     //     console.log('Game created!'+data.id);
     // });
+
+
+
     const game = document.getElementById('game');
 
     const gamePinDOM = document.createElement('label');
@@ -62,12 +65,14 @@ function main() {
 
     });
 }
-
+let numOfPlayersAnswered = 0;
 function answerSubmitted(){
         console.log('clicked')
         playerAnswered = true;
         socket.emit('playerAnswer', event.target.id);//Sends player answer to server
+
         socket.on('message', function(data){document.write(data)});
+        
         // //Hiding buttons from user
         // document.getElementById('answer1').style.visibility = "hidden";
         // document.getElementById('answer2').style.visibility = "hidden";
@@ -75,7 +80,22 @@ function answerSubmitted(){
         // document.getElementById('answer4').style.visibility = "hidden";
         // document.getElementById('message').style.display = "block";
         // document.getElementById('message').innerHTML = "Answer Submitted! Waiting on other players...";
-
 }
+
+socket.on('gameOver',function(){
+    console.log("reaching the gameover function on client side");
+    socket.on('message', function(data){document.write(data)});
+});
+
+function gameOver(){
+    
+    document.getElementById('game').style.display = 'none';
+    const gameOverImgContainDOM = document.createElement('div');
+    gameOverImgContainDOM.className = 'game-over-icon';
+    gameOverImgContainDOM.src = 'gameover.jpeg';
+    gameOverImgContainDOM.style.display = 'in-line';
+}
+
+
 
 main();

@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-
+const playerNum = 3;
 const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -91,18 +91,25 @@ let numOfPlayersAnswered = 0;
 
 
 io.on('connection', function(socket) {
-  numOfClients++;
+  socket.on('connectToGame',function(){
+      numOfClients++;
+  })
   console.log('A user connected');
   io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
-  if(numOfClients == 3){
+  if(numOfClients == playerNum){
     io.sockets.emit('redirect', destination);
     console.log('redirected');
   }
+
   socket.on('playerAnswer', function(data){
-    console.log('playersAnswered');
+    console.log('playersAnswered : num of player answered=' + numOfPlayersAnswered);
     numOfPlayersAnswered++;
-    if(numOfPlayersAnswered == playerNum ){
+    if(numOfPlayersAnswered >= playerNum ){
       console.log('Everyone Answered');
+      console.log('game is over');
+      io.sockets.emit('gameOver');
+      socket.send('Game is over!')
+      numOfPlayersAnswered=0;
     }else{
     socket.send('Waiting for other players to answer!')
     }
@@ -110,7 +117,6 @@ io.on('connection', function(socket) {
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
      console.log('A user disconnected');
-     numOfClients--;
      io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
   });
 
