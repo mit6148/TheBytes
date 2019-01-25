@@ -44,7 +44,7 @@ router.get('/tweets', function(req, res) {
 
 
         for(let i = 0; i < tweets.length; i++){
-          console.log(res.body.tex);
+          console.log(res.body.text);
           let tweetsToBeSaved = {
             twid: res.body.id,
             body: res.body.text,
