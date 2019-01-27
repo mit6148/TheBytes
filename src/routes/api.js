@@ -34,7 +34,6 @@ const client = new Twitter({
     bearer_token: 'AAAAAAAAAAAAAAAAAAAAAIYg9QAAAAAA10NZVma%2FJL0jQyuMllf%2FTaXOG%2BU%3DVG1AoTppEGqAMfgrXNE8QTkiAcc6Pdv4isWpIJWIobLov0kt4M'
 });
 
-<<<<<<< HEAD
 const params = ['AOC', 'realDonaldTrump', 'BarackObama', 'SpeakerPelosi', 'SenSchumer', 'SenWarren',
 'SenSanders', 'KamalaHarris', 'HillaryClinton', 'SenGillibrand', 'CoryBooker', 'ArianaGrande', 'souljaboy', 'smoss', 'kanyewest' , 'KimKardashian'];
 
@@ -50,25 +49,6 @@ for(let j = 0; j < params.length; j++){
   });
 
 }
-=======
-const params = [];
-let tweetsToBeSaved = new Array(0);
-
-router.get('/tweets', function(req, res) {
-  client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', include_rts: false}, function(error, tweets, response) {
-    if (!error) {
-        res.send(tweets);
-        //result = JSON.parse(tweets)
-
-        //for(let i = 0; i < tweets.length; i++){
-          //console.log(jQuery.parseJSON(JSON.stringify(tweets)));
-          let tweetsToBeSaved = {
-            //twid: tweets['text'],
-      //    };
-        }
-        
-        let tweetEntry = new tweetModel(tweetsToBeSaved);
->>>>>>> 977ade8e11a2da856077c0c2311d4c0422268aee
 
 
 

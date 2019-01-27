@@ -104,11 +104,7 @@ io.on('connection', function(socket) {
   socket.on('playerAnswer', function(data){
     console.log('playersAnswered : num of player answered=' + numOfPlayersAnswered);
     numOfPlayersAnswered++;
-<<<<<<< HEAD
-    if(numOfPlayersAnswered >= playerNum){
-=======
     if(numOfPlayersAnswered >= playerNum ){
->>>>>>> 977ade8e11a2da856077c0c2311d4c0422268aee
       console.log('Everyone Answered');
       console.log('game is over');
       io.sockets.emit('gameOver');
