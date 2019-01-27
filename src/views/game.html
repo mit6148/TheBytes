@@ -6,11 +6,21 @@
     <title>Fake Tweets</title>
     </head>
     <body>
+         <nav class = "navbar navbar-default" id = "mainNav">
+         <div class = "container-fluid" id ="navContainer">
+             <div class="navbar-brand" href="#">Fake Tweets</div>
+             <ul class = "nav navbar-nav navbar-right" id="navList">
+             </ul>
+         </div>
+     </nav>
         <div id = "game" >
-        
+            <button class ="panel panel-default row" id = "1"></button>
+            <button class ="panel panel-default row" id = "2"></button>
+            <button class ="panel panel-default row" id = "3"></button>
         </div>
     </body>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/static/js/navbar.js"></script>
     <script type="text/javascript" src="/static/js/api.js"></script>
     <script type="text/javascript" src="/static/js/tweetcard.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

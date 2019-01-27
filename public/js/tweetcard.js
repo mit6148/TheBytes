@@ -1,27 +1,70 @@
+// import { set } from "mongoose";
+
 let playerAnswered = false;
 const socket = io();
 
+function select_username(names){
+    return names[Math.floor(Math.random()*names.length)];
+}
 
-function main() {
+
+function removeElement(screenName, nameList){
+    var index = nameList.indexOf(screenName);
+    if (index > -1) {
+        nameList.splice(index, 1);
+    }
+    
+}
 
 
-    // socket.on('gameCreated',function(data){
-    //     console.log('Game created!'+data.id);
-    // });
-    const game = document.getElementById('game');
+function createContentDOM(name){
+    const contentDOM = document.createElement('div');
+    get('/api/tweets/'+name, {}, function(tweets){
+        for(let i = 0; i < 1; i++){
+            contentDOM.id = 'content';
+            contentDOM.innerText = tweets[i].text;
+        }
+          
+            
+    });
+    return contentDOM;
 
-    const gamePinDOM = document.createElement('label');
-    get('/api/tweets', {}, function(tweets){
-        const MAX = 3;
-        for (let i = 0; i < MAX; i++){
-            const tweetCardDOM = document.createElement('button');
-            tweetCardDOM.className = 'panel panel-default row';
-            tweetCardDOM.id = i;
+}
+function game(){
+    const names = ['AOC', 'realDonaldTrump', 'BarackObama', 'SpeakerPelosi', 'SenSchumer', 'SenWarren',
+    'SenSanders', 'KamalaHarris', 'HillaryClinton', 'SenGillibrand', 'CoryBooker', 'ArianaGrande', 'souljaboy', 'smoss', 'shaunking', 'kanyewest' , 'KimKardashian'];
+    
+
+        const screen_name = select_username(names);
+
+       
+        
+        removeElement(screen_name, names);
+    
+        const idNames = ['1','2','3'];
+        const falseTweetId = idNames[Math.floor(Math.random()*idNames.length)]; 
+        removeElement(falseTweetId, idNames);
+    
+        const currentFalseUName = select_username(names);
+
+        createCards(screen_name,falseTweetId,currentFalseUName);
+    
+    return falseTweetId;
+}
+
+
+function createCards(screen_name, falseId, falseName){
+    get('/api/tweets/'+screen_name, {}, function(tweets){
+        const MAX = ['1','2','3'];
+
+        for(let i = 0; i < MAX.length; i++){
+            const tweetButtonDOM = document.getElementById(MAX[i]);
+            tweetButtonDOM.onClick = answerSubmitted();
+            
             const imgContainDOM = document.createElement('div');
             imgContainDOM.className = 'col-sm-3';
             imgContainDOM.id = 'img-contain ';
-            tweetCardDOM.appendChild(imgContainDOM);
-
+            tweetButtonDOM.appendChild(imgContainDOM);
 
             const profileImageDOM = document.createElement('img');
             profileImageDOM.className = 'img-circle';
@@ -31,7 +74,7 @@ function main() {
             const tweetDataDOM = document.createElement('div');
             tweetDataDOM.className = "col-sm-6";
             tweetDataDOM.id = 'tweet-data';
-            tweetCardDOM.appendChild(tweetDataDOM);
+            tweetButtonDOM.appendChild(tweetDataDOM);
             
             const nameDOM = document.createElement('span');
             nameDOM.id = 'name';
@@ -44,37 +87,37 @@ function main() {
             tweetDataDOM.appendChild(userNameDOM);
 
             const contentDOM = document.createElement('div');
-            contentDOM.id = 'content';
-            contentDOM.innerText = tweets[i].text;
+            contentDOM.id = 'content'+MAX[i];
+            if(MAX[i] != falseId){
+                contentDOM.innerText = tweets[i].text;
+
+            }
             tweetDataDOM.appendChild(contentDOM);
 
-            tweetCardDOM.addEventListener('click',answerSubmitted,false);
-
-            game.prepend(tweetCardDOM);
         }
-
-            //const socket = io();
-            //socket.on('user', function(story){
-           // const storiesDiv = document.getElementById('users');
-           // storiesDiv.prepend(storyDOMObject(story.user));
-         // });
-    
-
+    });
+    get('/api/tweets/'+falseName, {}, function(fTweets){
+        console.log(falseName);
+        const contentDOMF = document.getElementById('content'+falseId);
+        for(let j = 0; j < 1; j++){
+            contentDOMF.innerText = fTweets[j].text;
+        }
     });
 }
 
+function main() {
+
+   game();
+
+   
+}
+
 function answerSubmitted(){
-        console.log('clicked')
         playerAnswered = true;
-        socket.emit('playerAnswer', event.target.id);//Sends player answer to server
+        socket.emit('playerAnswer');//Sends player answer to server
         socket.on('message', function(data){document.write(data)});
-        // //Hiding buttons from user
-        // document.getElementById('answer1').style.visibility = "hidden";
-        // document.getElementById('answer2').style.visibility = "hidden";
-        // document.getElementById('answer3').style.visibility = "hidden";
-        // document.getElementById('answer4').style.visibility = "hidden";
-        // document.getElementById('message').style.display = "block";
-        // document.getElementById('message').innerHTML = "Answer Submitted! Waiting on other players...";
+        
+
 
 }
 

@@ -34,45 +34,22 @@ const client = new Twitter({
     bearer_token: 'AAAAAAAAAAAAAAAAAAAAAIYg9QAAAAAA10NZVma%2FJL0jQyuMllf%2FTaXOG%2BU%3DVG1AoTppEGqAMfgrXNE8QTkiAcc6Pdv4isWpIJWIobLov0kt4M'
 });
 
-const params = [];
-let tweetsToBeSaved = new Array(0);
+const params = ['AOC', 'realDonaldTrump', 'BarackObama', 'SpeakerPelosi', 'SenSchumer', 'SenWarren',
+'SenSanders', 'KamalaHarris', 'HillaryClinton', 'SenGillibrand', 'CoryBooker', 'ArianaGrande', 'souljaboy', 'smoss', 'kanyewest' , 'KimKardashian'];
 
-router.get('/tweets', function(req, res) {
-  client.get('statuses/user_timeline', { screen_name: 'realDonaldTrump', include_rts: false}, function(error, tweets, response) {
-    if (!error) {
-        res.send(tweets);
-
-
-        for(let i = 0; i < tweets.length; i++){
-          console.log(res.body.text);
-          let tweetsToBeSaved = {
-            twid: res.body.id,
-            body: res.body.text,
-            date: res.body.created_at,
-            screenname: res.body.user.screen_name
-          };
-        }
-        
-        let tweetEntry = new tweetModel(tweetsToBeSaved);
-
-        tweetEntry.save(function(err) {
-          if (!err) {
-            // If everything is cool, socket.io emits the tweet.
-            console.log('tweet saved');
-          }
-        });
-        // tweetsToBeSaved = new tweetModel({
-        //   twitterUsername : tweets,
-        //   tweetContent    : tweets
-        // });
-        // tweetsToBeSaved.save(function (err) {
-        //    if (err) return handleError(err);
-        //   //   // saved!
-        //   console.log('tweet saved');
-        // });
-    }
+for(let j = 0; j < params.length; j++){
+  console.log(params[j]);
+  router.get('/tweets/'+params[j], function(req, res) {
+    client.get('statuses/user_timeline', { screen_name: params[j], include_rts: false, count:70, trim_user: false}, function(error, tweets, response) {
+      if (!error) {
+          res.send(tweets);
+  
+      }
+    });
   });
-});
+
+}
+
 
 
 

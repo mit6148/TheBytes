@@ -99,10 +99,14 @@ io.on('connection', function(socket) {
     console.log('redirected');
   }
   socket.on('playerAnswer', function(data){
-    console.log('playersAnswered');
+    console.log('playersAnswered : num of player answered=' + numOfPlayersAnswered);
     numOfPlayersAnswered++;
-    if(numOfPlayersAnswered == playerNum ){
+    if(numOfPlayersAnswered >= playerNum){
       console.log('Everyone Answered');
+      console.log('game is over');
+      io.sockets.emit('gameOver');
+      socket.send('Game is over!')
+      numOfPlayersAnswered=0;
     }else{
     socket.send('Waiting for other players to answer!')
     }
