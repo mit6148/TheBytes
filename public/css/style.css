@@ -182,3 +182,81 @@ p{
     text-align:left;
     padding-left: 34px;
 }
+
+/* Anna added*/
+#wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1280px;
+    height: 700px;
+}
+#titleStats {
+    color: rgb(255, 166, 0);
+    position: relative;
+    bottom: 0px;
+    left: 105px;
+    font-size: 40px;
+    margin: 0;
+}
+/* Creating the ranking numbers */
+#rankNumber1 {
+    color: gray;
+    position: relative;
+    bottom: 90px;
+    left: 140px;
+    font-size: 100px;
+}
+#rankNumber2 {
+    color: gray;
+    position: relative;
+    bottom: 90px;
+    left: 140px;
+    font-size: 100px;
+}
+#rankNumber3 {
+    color: gray;
+    position: relative;
+    bottom: 90px;
+    left: 140px;
+    font-size: 100px;
+}
+#rankLabel {
+    color: rgb(61, 115, 231);
+    position: relative;
+    bottom: 0px;
+    left: 130px;
+    font-size: 40px;
+}
+#userLabel {
+    color: rgb(61, 115, 231);
+    position: relative;
+    bottom: 55px;
+    left: 270px;
+    font-size: 40px;
+}
+#pointsLabel {
+    color: rgb(61, 115, 231);
+    position: relative;
+    bottom: 110px;
+    left: 670px;
+    font-size: 40px;
+}
+
+#donald
+{
+    border-radius: 50%;
+}
+#kanye
+{
+    border-radius: 50%;
+}
+#shaun
+{
+    border-radius: 50%;
+}
+
+.circle-chart
+{
+    background-image: linear-gradient(to right, rgba(206, 203, 203, 0.44), rgb(106, 176, 206))  
+}
+

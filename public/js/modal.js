@@ -57,6 +57,7 @@ function stepTwo(){
 // }
 function connectRoom(){
     window.location.replace('/wait');
+    socket.emit('connectToGame');
 }
 
 // function createRoom(){

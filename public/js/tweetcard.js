@@ -52,6 +52,16 @@ function game(){
     return falseTweetId;
 }
 
+<<<<<<< HEAD
+=======
+    // socket.on('gameCreated',function(data){
+    //     console.log('Game created!'+data.id);
+    // });
+
+
+
+    const game = document.getElementById('game');
+>>>>>>> 977ade8e11a2da856077c0c2311d4c0422268aee
 
 function createCards(screen_name, falseId, falseName){
     get('/api/tweets/'+screen_name, {}, function(tweets){
@@ -111,14 +121,43 @@ function main() {
 
    
 }
-
+let numOfPlayersAnswered = 0;
 function answerSubmitted(){
         playerAnswered = true;
+<<<<<<< HEAD
         socket.emit('playerAnswer');//Sends player answer to server
         socket.on('message', function(data){document.write(data)});
         
 
+=======
+        socket.emit('playerAnswer', event.target.id);//Sends player answer to server
 
+        socket.on('message', function(data){document.write(data)});
+        
+        // //Hiding buttons from user
+        // document.getElementById('answer1').style.visibility = "hidden";
+        // document.getElementById('answer2').style.visibility = "hidden";
+        // document.getElementById('answer3').style.visibility = "hidden";
+        // document.getElementById('answer4').style.visibility = "hidden";
+        // document.getElementById('message').style.display = "block";
+        // document.getElementById('message').innerHTML = "Answer Submitted! Waiting on other players...";
 }
+
+socket.on('gameOver',function(){
+    console.log("reaching the gameover function on client side");
+    socket.on('message', function(data){document.write(data)});
+});
+>>>>>>> 977ade8e11a2da856077c0c2311d4c0422268aee
+
+function gameOver(){
+    
+    document.getElementById('game').style.display = 'none';
+    const gameOverImgContainDOM = document.createElement('div');
+    gameOverImgContainDOM.className = 'game-over-icon';
+    gameOverImgContainDOM.src = 'gameover.jpeg';
+    gameOverImgContainDOM.style.display = 'in-line';
+}
+
+
 
 main();
