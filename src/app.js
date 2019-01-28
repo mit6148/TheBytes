@@ -88,7 +88,7 @@ const gameEnds = '/end'
 //number of clients connected to the socket server 
 let numOfClients = 0;
 let numOfPlayersAnswered = 0;
-
+let numOfRounds = 0;
 
 
 io.on('connection', function(socket) {
@@ -108,10 +108,16 @@ io.on('connection', function(socket) {
     if(numOfPlayersAnswered >= playerNum ){
       console.log('Everyone Answered');
       io.sockets.emit('nextRound');
+      numOfRounds++;
       numOfPlayersAnswered=0;
-    }else{
+    }
+    if(numOfRounds == 4){
+      io.sockets.emit('gameOver');
+    }
+    else{
     socket.send('Waiting for other players to answer!')
     }
+
 });
   
   //Whenever someone disconnects this piece of code executed

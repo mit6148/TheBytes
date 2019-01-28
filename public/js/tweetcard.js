@@ -115,6 +115,7 @@ function main() {
 let numOfPlayersAnswered = 0;
 function answerSubmitted(){
         playerAnswered = true;
+        //socket.emit('playerAnswer');
         socket.emit('playerAnswer', event.target.id);//Sends player answer to server
         socket.on('message', function(data){document.write(data)});
 }
@@ -123,6 +124,7 @@ socket.on('nextRound',function(){
     game();
     console.log('next question')
 });
+
 socket.on('gameOver',function(){
     window.location.replace('/end');
 //    socket.emit('Game ended');
