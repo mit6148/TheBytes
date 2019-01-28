@@ -105,7 +105,7 @@ io.on('connection', function(socket) {
   socket.on('playerAnswer', function(data){
     console.log('playersAnswered : num of player answered=' + numOfPlayersAnswered);
     numOfPlayersAnswered++;
-    if(numOfPlayersAnswered >= playerNum ){
+    if(numOfPlayersAnswered >= playerNum && numOfRounds <4){
       console.log('Everyone Answered');
       io.sockets.emit('nextRound');
       numOfRounds++;
