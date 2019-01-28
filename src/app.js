@@ -82,6 +82,7 @@ const io = socketio(server);
 app.set('socketio',io);
 
 const destination =  '/game'
+const gameEnds = '/end'
 
 
 //number of clients connected to the socket server 
@@ -106,14 +107,13 @@ io.on('connection', function(socket) {
     numOfPlayersAnswered++;
     if(numOfPlayersAnswered >= playerNum ){
       console.log('Everyone Answered');
-      console.log('game is over');
-      io.sockets.emit('gameOver');
-      socket.send('Game is over!')
+      io.sockets.emit('nextRound');
       numOfPlayersAnswered=0;
     }else{
     socket.send('Waiting for other players to answer!')
     }
 });
+  
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {
      console.log('A user disconnected');

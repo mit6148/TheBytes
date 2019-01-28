@@ -12,6 +12,10 @@ router.get('/', function(req, res) {
   res.sendFile('landingPage.html', { root: 'src/views' });
 });
 
+router.get('/end', function(req, res) {
+  res.sendFile('combined.html', { root: 'src/views' });
+});
+
 router.get('/game', function(req, res) {
   res.sendFile('game.html', { root: 'src/views' });
 });
