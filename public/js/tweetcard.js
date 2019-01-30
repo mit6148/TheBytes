@@ -102,7 +102,9 @@ function answerSubmitted(){
         socket.emit('playerAnswer', event.target.id);//Sends player answer to server
         socket.on('message', function(data){document.write(data)});
 }
-
+socket.on('redirect', function() {
+    game();
+});
 socket.on('nextRound',function(){
     game();
     console.log('next question')
