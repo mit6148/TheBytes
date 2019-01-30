@@ -60,7 +60,7 @@ function createCards(screen_name, falseId, falseName){
 
         for(let i = 0; i < MAX.length; i++){
             const tweetButton = document.getElementById(MAX[i]);
-            tweetButton.onClick = answerSubmitted();
+            tweetButton.onclick = answerSubmitted();
             const tweetButtonDOM = document.getElementById('content'+MAX[i]);
             
             
