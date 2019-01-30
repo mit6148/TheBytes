@@ -104,9 +104,9 @@ function answerSubmitted(){
         socket.emit('playerAnswer', event.target.id);//Sends player answer to server
         socket.on('message', function(data){document.write(data)});
 }
-socket.on('redirect', function() {
+function main(){
     game();
-});
+}
 socket.on('nextRound',function(){
     const MAX = ['1','2','3'];
     for(let j = 0; j < MAX.length; j++){
@@ -126,3 +126,4 @@ socket.on('gameOver',function(){
 //    socket.emit('Game ended');
     console.log('game ended')
 });
+main();
