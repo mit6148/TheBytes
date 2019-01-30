@@ -94,7 +94,7 @@ let numOfRounds = 0;
 io.on('connection', function(socket) {
   socket.on('connectToGame',function(){
       numOfClients++;
-  })
+  });
   console.log('A user connected');
   io.sockets.emit('broadcast',{ description: numOfClients + ' clients connected!'});
   if(numOfClients == playerNum){
