@@ -113,9 +113,7 @@ socket.on('nextRound',function(){
         const tweetButtonDOM = document.getElementById(MAX[j]);
         const tweetButtonContentDOM = document.getElementById('content'+MAX[j]);
         tweetButtonDOM.removeChild(tweetButtonContentDOM);
-
-
-        const newCard = document.createElement(div);
+        const newCard = document.createElement('div');
         newCard.id = 'content'+MAX[j];
         tweetButtonDOM.appendChild(newCard);
     }
