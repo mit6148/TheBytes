@@ -89,28 +89,11 @@ function createCards(screen_name, falseId, falseName){
 
             const contentDOM = document.createElement('div');
             contentDOM.id = 'content'+MAX[i];
-            if(MAX[i] != falseId){
-                contentDOM.innerText = tweets[i].text;
-
-            }
+            contentDOM.innerText = tweets[i].text;
             tweetDataDOM.appendChild(contentDOM);
 
         }
     });
-    get('/api/tweets/'+falseName, {}, function(fTweets){
-        console.log(falseName);
-        const contentDOMF = document.getElementById('content'+falseId);
-        for(let j = 0; j < 1; j++){
-            contentDOMF.innerText = fTweets[j].text;
-        }
-    });
-}
-
-function main() {
-
-   game();
-
-   
 }
 let numOfPlayersAnswered = 0;
 function answerSubmitted(){
@@ -130,5 +113,3 @@ socket.on('gameOver',function(){
 //    socket.emit('Game ended');
     console.log('game ended')
 });
-
-main();
