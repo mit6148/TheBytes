@@ -105,19 +105,18 @@ io.on('connection', function(socket) {
   socket.on('playerAnswer', function(data){
     console.log('playersAnswered : num of player answered=' + numOfPlayersAnswered);
     numOfPlayersAnswered++;
+
+    if(numOfPlayersAnswered >= playerNum && numOfRounds <4){
+      console.log('Everyone Answered');
+      numOfRounds++;
+      numOfPlayersAnswered=0;
+      io.sockets.emit('nextRound');
+    }
+    if(numOfRounds == 4){
+      io.sockets.emit('gameOver');
+    }
   });
-if(numOfPlayersAnswered >= playerNum && numOfRounds <4){
-  console.log('Everyone Answered');
-  numOfRounds++;
-  numOfPlayersAnswered=0;
-  io.sockets.emit('nextRound');
-}
-if(numOfRounds == 4){
-  io.sockets.emit('gameOver');
-}
-else{
-socket.send('Waiting for other players to answer!')
-}
+  
 
   //Whenever someone disconnects this piece of code executed
   socket.on('disconnect', function () {

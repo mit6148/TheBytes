@@ -59,8 +59,10 @@ function createCards(screen_name, falseId, falseName){
         const MAX = ['1','2','3'];
 
         for(let i = 0; i < MAX.length; i++){
-            const tweetButtonDOM = document.getElementById(MAX[i]);
-            tweetButtonDOM.onClick = answerSubmitted();
+            const tweetButton = document.getElementById(MAX[i]);
+            tweetButton.onClick = answerSubmitted();
+            const tweetButtonDOM = document.getElementById('content'+MAX[i]);
+            
             
             const imgContainDOM = document.createElement('div');
             imgContainDOM.className = 'col-sm-3';
@@ -106,6 +108,17 @@ socket.on('redirect', function() {
     game();
 });
 socket.on('nextRound',function(){
+    const MAX = ['1','2','3'];
+    for(let j = 0; j < MAX.length; j++){
+        const tweetButtonDOM = document.getElementById(MAX[j]);
+        const tweetButtonContentDOM = document.getElementById('content'+MAX[j]);
+        tweetButtonDOM.removeChild(tweetButtonContentDOM);
+
+
+        const newCard = document.createElement(div);
+        newCard.id = 'content'+MAX[j];
+        tweetButtonDOM.appendChild(newCard);
+    }
     game();
     console.log('next question')
 });
