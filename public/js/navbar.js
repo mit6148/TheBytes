@@ -4,7 +4,7 @@ function newNavItem(text, url){
     const newNavLink = document.createElement('a');
     newNavLink.className = 'navItem';
 	newNavLink.innerHTML = text;
-	newNavLink.href = window.location.replace(url);
+	newNavLink.addEventListener('click', window.location.replace(url), false);
     NavListElt.appendChild(newNavLink)
 	return newNavLink;
 
