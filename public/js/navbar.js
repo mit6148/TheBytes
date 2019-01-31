@@ -15,7 +15,7 @@ function renderNavBar(){
     const navList = document.getElementById('navList');
     
     navList.appendChild(newNavItem("Play Game", "/index"));
-    navList.appendChild(newNavItem("Dashboard", "/combined"));
+    navList.appendChild(newNavItem("Dashboard", "#"));
     navList.appendChild(newNavItem("Logout", "#"));
 
 }
