@@ -8,7 +8,7 @@ function stepOne(){
     
     const instructDOM = document.createElement('p');
     instructDOM.id = 'select-text';
-    instructDOM.innerText = 'Wait until 3 players have connected! And then once game start click the false tweet.';
+    instructDOM.innerText = 'Wait until 3 players have connected. Then click connect link to start game.';
     selectModeDivDOM.appendChild(instructDOM);
 
 
@@ -20,10 +20,18 @@ function stepOne(){
     selectModeDivDOM.appendChild(singlePlayerButtonDOM);
 
 
+    // const multiplePlayerButtonDOM = document.createElement('button');
+    // multiplePlayerButtonDOM.id = "multiple";
+    // multiplePlayerButtonDOM.className = 'mode-btn';
+    // multiplePlayerButtonDOM.addEventListener("click", stepTwo, false);
+    // multiplePlayerButtonDOM.innerText = "Multiple Player";
+    // selectModeDivDOM.appendChild(multiplePlayerButtonDOM);
+    modalBodyDOM.appendChild(selectModeDivDOM);
+
 
 }
 function stepTwo(){
-    document.getElementById('select-mode').style.display = 'none';
+    // document.getElementById('select-mode').style.display = 'none';
     // if(event.target.id === "single"){
     //     selectCategory();
     // }
@@ -71,18 +79,18 @@ function multiplePlayerMode(){
     formTagDOM.appendChild(formGroupDivDOM);
 
 
-    const labelTagDOM = document.createElement('label');
-    labelTagDOM.for = 'group-code';
-    labelTagDOM.innerText = 'Enter Group Pin:';
-    formTagDOM.appendChild(labelTagDOM);
+    // const labelTagDOM = document.createElement('label');
+    // labelTagDOM.for = 'group-code';
+    // labelTagDOM.innerText = 'Enter Group Pin:';
+    // formTagDOM.appendChild(labelTagDOM);
 
 
-    const inputTagDOM = document.createElement('input');
-    inputTagDOM.type = 'text';
-    inputTagDOM.className = 'form-control';
-    inputTagDOM.id = 'group-code';
-    inputTagDOM.placeholder = 'Code Here';
-    formTagDOM.appendChild(inputTagDOM);
+    // const inputTagDOM = document.createElement('input');
+    // inputTagDOM.type = 'text';
+    // inputTagDOM.className = 'form-control';
+    // inputTagDOM.id = 'group-code';
+    // inputTagDOM.placeholder = 'Code Here';
+    // formTagDOM.appendChild(inputTagDOM);
 
     const connectButtonDOM = document.createElement('a');
     connectButtonDOM.innerText = 'Connect'
