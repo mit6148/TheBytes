@@ -4,7 +4,7 @@ function newNavItem(text, url){
     const newNavLink = document.createElement('a');
     newNavLink.className = 'navItem';
 	newNavLink.innerHTML = text;
-	newNavLink.href = url;
+	newNavLink.href = window.location.replace(url);
     NavListElt.appendChild(newNavLink)
 	return newNavLink;
 
@@ -14,8 +14,8 @@ function newNavItem(text, url){
 function renderNavBar(){
     const navList = document.getElementById('navList');
     
-    navList.appendChild(newNavItem("Play Game", "#"));
-    navList.appendChild(newNavItem("Dashboard", "#"));
+    navList.appendChild(newNavItem("Play Game", "/index"));
+    navList.appendChild(newNavItem("Dashboard", "/combined"));
     navList.appendChild(newNavItem("Logout", "#"));
 
 }
